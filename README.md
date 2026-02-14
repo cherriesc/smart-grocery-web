@@ -1,31 +1,31 @@
-# Enter Name of Website
+# Grocery Price Comparison
 
-Website Name if a Fullstack Project with Docker, ...
-The project is configures, so that it will start locally right after cloning.
+Full-stack project for comparing grocery prices across UK stores.
+Backend: Spring Boot + PostgreSQL.
 
 ---
 
 ## Tech-Stack
 
-- Backend:  
-- Database: PostgreSQL  
-- Container: Docker  
-- Config: .env-Data
+- Backend: Java 21, Spring Boot
+- Database: PostgreSQL
+- Containerization: Docker, Docker Compose
+- Build Tool: Maven
+- API: REST
 
 ---
 
 ## Project Structure
 
-chefsy_recipes/
-├─ backend/
-│  ├─ server.js
-│  ├─ init.sql
-│  ├─ package.json
-│  └─ ...
-├─ docker-compose.yml
-├─ .env.example
-├─ .gitignore
-└─ README.md
+grocery-project/
+│
+├── grocery-backend/
+│   ├── src/
+│   ├── pom.xml
+│   └── Dockerfile
+│
+├── docker-compose.yml
+└── README.md
 
 ---
 
@@ -39,23 +39,39 @@ Tools need to be installed:
 
 ## How to start the project locally
 
-### 1. Clone Repository
+### 1. Clone repository:
+git clone <repo-url>
 
----
+### 2. Go to project folder:
+cd grocery-project
+
+### 3. Start containers:
+docker-compose up --build
+
+### Backend will be accessible:
+http://localhost:8080
 
 ## Backend API
 
-The backend is accessible at:
+GET /products  
+GET /stores  
+POST /basket/compare  
 
+Example request:
 
+POST /basket/compare
 
----
+{
+  "items": [
+    { "productId": 1, "quantity": 2 },
+    { "productId": 2, "quantity": 1 }
+  ]
+}
 
 ## Database
 
-- Database name: chefsy_recipes
-- PostgreSQL runs in a Docker container
----
+Database name: grocery
+PostgreSQL runs in Docker container
 
 ## Environment Variable
 
