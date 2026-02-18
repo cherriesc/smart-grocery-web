@@ -11,3 +11,12 @@ public class GroceryBackendApplication {
     }
 
 }
+
+//http://localhost:8080/products
+//http://localhost:8080/stores
+//http://localhost:8080/prices
+//http://localhost:8080/products/categories
+//http://localhost:8080/products?category=Dairy
+//
+//
+//
