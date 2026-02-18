@@ -40,10 +40,10 @@ Tools need to be installed:
 ## How to start the project locally
 
 ### 1. Clone repository:
-git clone <repo-url>
+git clone https://github.com/cherriesc/smart-grocery-web.git
 
 ### 2. Go to project folder:
-cd grocery-project
+cd smart-grocery-web
 
 ### 3. Start containers:
 docker-compose up --build
