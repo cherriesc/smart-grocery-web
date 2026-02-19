@@ -17,15 +17,18 @@ Backend: Spring Boot + PostgreSQL.
 
 ## Project Structure
 
-grocery-project/
+smart-grocery-web/
 │
-├── grocery-backend/
+├── client/                 
+├── grocery-backend/        
 │   ├── src/
 │   ├── pom.xml
 │   └── Dockerfile
 │
-├── docker-compose.yml
+├── docker-compose.yml      
+├── .gitignore
 └── README.md
+
 
 ---
 
