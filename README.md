@@ -7,11 +7,18 @@ Backend: Spring Boot + PostgreSQL.
 
 ## Tech-Stack
 
-- Backend: Java 21, Spring Boot
-- Database: PostgreSQL
-- Containerization: Docker, Docker Compose
-- Build Tool: Maven
-- API: REST
+1. Backend: 
+   - Java 21, 
+   - Spring Boot
+2. Database:  PostgreSQL
+3. Frontend:
+   - Node.js (v22)
+   - Vue (v3.5)
+   - AJAX - Axios
+4. Containerization: Docker
+5. Build Tool: Maven
+6. API: REST
+7. Configuration: .env file
 
 ---
 
