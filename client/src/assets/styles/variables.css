@@ -1,69 +1,231 @@
-/* ============================================
-   SmartBasket — Design Tokens
-   Color palette, spacing, radius, shadows
-   ============================================ */
+/* =============================================
+   UTILITIES — Reusable helper classes
+   ============================================= */
 
-:root { /*still a draft, we havent decided on a color yet*/
-  /* ── Brand Colors ── */
-  --color-primary:        #3D3A6B;   /* deep indigo – nav, CTAs */
-  --color-primary-hover:  #2E2B54;
-  --color-primary-light:  #E8E7F4;   /* tint for backgrounds */
+/* --- Container --- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
 
-  --color-accent:         #6C63C7;   /* violet accent – highlights */
-  --color-accent-hover:   #5850B4;
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 2px solid transparent;
+  text-decoration: none;
+}
 
-  --color-success:        #27AE60;
-  --color-danger:         #E74C3C;
-  --color-warning:        #F39C12;
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-orange);
+}
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(249,115,22,0.35);
+}
 
-  /* ── Neutrals ── */
-  --color-white:          #FFFFFF;
-  --color-bg:             #F7F7FB;   /* page background */
-  --color-surface:        #FFFFFF;   /* card / panel */
-  --color-border:         #E0DFF0;
-  --color-text-primary:   #1A1833;
-  --color-text-secondary: #6B6884;
-  --color-text-muted:     #A09BB8;
-  --color-placeholder:    #B8B4D0;
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.btn-outline:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
 
-  /* ── Retailer Brand Colors ── */
-  --color-asda:           #78BE20;
-  --color-aldi:           #005AA0;
-  --color-tesco:          #EE1C2E;
-  --color-asda-bg:        #F0F9E8;
+.btn-ghost {
+  background: transparent;
+  color: var(--color-grey-700);
+}
+.btn-ghost:hover {
+  background: var(--color-grey-100);
+  color: var(--color-dark);
+}
 
-  /* ── Spacing Scale ── */
-  --space-1:   4px;
-  --space-2:   8px;
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  20px;
-  --space-6:  24px;
-  --space-8:  32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
+.btn-sm {
+  padding: var(--space-1) var(--space-4);
+  font-size: var(--font-size-xs);
+}
 
-  /* ── Border Radius ── */
-  --radius-sm:   6px;
-  --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-xl:  24px;
-  --radius-pill: 999px;
+/* --- Badge / Tag --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-dark);
+}
 
-  /* ── Shadows ── */
-  --shadow-xs: 0 1px 3px rgba(61,58,107,0.08);
-  --shadow-sm: 0 2px 8px rgba(61,58,107,0.10);
-  --shadow-md: 0 4px 16px rgba(61,58,107,0.12);
-  --shadow-lg: 0 8px 32px rgba(61,58,107,0.14);
+/* --- Card --- */
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
 
-  /* ── Transitions ── */
-  --transition-fast:   150ms ease;
-  --transition-normal: 250ms ease;
-  --transition-slow:   400ms ease;
+/* --- Product image placeholder --- */
+.img-placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-grey-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-grey-300);
+}
+.img-placeholder svg {
+  width: 40px;
+  height: 40px;
+}
 
-  /* ── Z-index layers ── */
-  --z-dropdown: 100;
-  --z-modal:    200;
-  --z-toast:    300;
+/* --- Search bar --- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-grey-50);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  transition: border-color var(--transition-fast);
+}
+.search-bar:focus-within {
+  border-color: var(--color-primary);
+  background: var(--color-white);
+}
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: var(--font-size-sm);
+  color: var(--color-grey-900);
+  width: 100%;
+}
+.search-bar input::placeholder {
+  color: var(--color-grey-400, #a0a0b8);
+}
+
+/* --- Icon button --- */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-grey-50);
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--color-grey-700);
+  position: relative;
+}
+.icon-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.icon-btn .badge-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Section title --- */
+.section-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  margin-bottom: var(--space-6);
+}
+
+/* --- Divider --- */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-6) 0;
+}
+
+/* --- Pagination --- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-8) 0;
+}
+.pagination button {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-grey-700);
+  background: transparent;
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.pagination button:hover,
+.pagination button.active {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+/* --- Price text --- */
+.price {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+/* --- Empty state --- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+  color: var(--color-grey-500);
+}
+
+/* --- Page wrapper (accounts for fixed header) --- */
+.page-content {
+  padding-top: var(--header-height);
+  min-height: 100vh;
 }
