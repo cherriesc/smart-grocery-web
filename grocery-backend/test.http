@@ -1,0 +1,30 @@
+@baseUrl = http://localhost:8080
+@userId = 2
+### register
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "max2",
+  "email": "max2@test.com",
+  "password": "2345678"
+}
+
+### login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "max2@test.com",
+  "password": "2345678"
+}
+
+### SAVE BASKET
+PUT {{baseUrl}}/api/users/{{userId}}/basket
+Content-Type: application/json
+
+{"items":[{"productId":1,"quantity":2},{"productId":3,"quantity":1}]}
+
+### GET BASKET
+GET {{baseUrl}}/api/users/{{userId}}/basket
+Accept: application/json
