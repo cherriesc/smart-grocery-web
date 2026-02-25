@@ -42,6 +42,11 @@
             placeholder="Search for..."
             @keyup.enter="handleSearch"
           />
+          <button class="search-submit" @click="handleSearch" aria-label="Search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -251,6 +256,24 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
   align-items: center;
   gap: var(--space-2);
   margin-left: auto;
+}
+
+.search-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-full);
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.search-submit:hover {
+  background: var(--color-primary-dark);
 }
 
 @media (max-width: 768px) {
