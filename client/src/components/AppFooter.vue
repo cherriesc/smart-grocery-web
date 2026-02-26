@@ -6,12 +6,13 @@
           <span class="logo-icon">🛒</span>
           <span class="logo-text">smartbasket</span>
         </RouterLink>
-        <p class="footer-tagline">Compare grocery prices across all your favourite supermarkets.</p>
+        <p class="footer-tagline">Shop smart, save more.</p>
       </div>
 
       <div class="footer-links">
         <div class="footer-col">
           <h6 class="footer-col-title">Company</h6>
+          <RouterLink to="/how-to-use" class="footer-link">How to Use</RouterLink>
           <RouterLink to="/privacy-policy" class="footer-link">Privacy & Policy</RouterLink>
           <RouterLink to="/how-to-use" class="footer-link">How to Use</RouterLink>
         </div>
@@ -25,7 +26,7 @@
     <div class="footer-bottom">
       <div class="container">
         <p class="footer-copy">
-          Copyright © 2024 Smartbasket | All Rights Reserved |
+          Copyright © 2026 Smartbasket | All Rights Reserved |
           <RouterLink to="/terms" class="footer-legal-link">Terms and Conditions</RouterLink> |
           <RouterLink to="/privacy-policy" class="footer-legal-link">Privacy Policy</RouterLink>
         </p>
