@@ -4,8 +4,8 @@
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-content">
-          <h1 class="hero-title">Compare smarter,<br/><span class="hero-accent">save bigger.</span></h1>
-          <p class="hero-subtitle">Find the lowest grocery prices across Tesco, ASDA, Lidl, ALDI and more — all in one place.</p>
+          <h1 class="hero-title">Shop smart,<br/><span class="hero-accent">save more.</span></h1>
+          <p class="hero-subtitle">Tired of watching your grocery bill climb? Smart Basket instantly compares your shopping list across every major UK supermarket, from Tesco to Aldi, ensuring you never overpay for your weekly shop again.</p>
           <div class="hero-search search-bar">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -13,7 +13,7 @@
             <input
               v-model="heroSearch"
               type="text"
-              placeholder="Search for..."
+              placeholder="Start saving..."
               @keyup.enter="handleHeroSearch"
             />
           </div>

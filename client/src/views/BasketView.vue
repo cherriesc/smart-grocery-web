@@ -43,9 +43,9 @@
               </td>
               <td class="col-qty">
                 <div class="qty-control">
-                  <button class="qty-btn" @click="decreaseQty(item)">−</button>
+                  <button class="qty-btn" @click="decreaseQty(item.id)">−</button>
                   <span class="qty-value">{{ item.quantity }}</span>
-                  <button class="qty-btn" @click="increaseQty(item)">+</button>
+                  <button class="qty-btn" @click="increaseQty(item.id)">+</button>
                 </div>
               </td>
               <td
@@ -94,24 +94,15 @@
 <script setup>
 import { ref, computed } from 'vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { useBasket } from '@/composables/useBasket.js'
 
-// --- Mock data (replace with store / API) ---
+const { items: basketItems, increaseQty, decreaseQty, removeItem } = useBasket()
+
 const stores = ref([
   { id: 'lidl', name: 'LIDL' },
   { id: 'aldi', name: 'ALDI' },
   { id: 'tesco', name: 'TESCO' },
   { id: 'asda', name: 'ASDA' },
-])
-
-const basketItems = ref([
-  {
-    id: 1,
-    brand: 'Heinz',
-    name: 'Reduced Sugar Tomato Ketchup 368 ml Low Carb 369g',
-    imageUrl: null,
-    quantity: 1,
-    storePrices: { lidl: 2.99, aldi: 3.01, tesco: 3.50, asda: 2.98 }
-  }
 ])
 
 function formatPrice(val) {
@@ -143,11 +134,7 @@ function isBestStore(storeId) {
   return getSubtotal(storeId) === min
 }
 
-function increaseQty(item) { item.quantity++ }
-function decreaseQty(item) { if (item.quantity > 1) item.quantity-- }
-function removeItem(id) {
-  basketItems.value = basketItems.value.filter(i => i.id !== id)
-}
+
 </script>
 
 <style scoped>

@@ -39,7 +39,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search for..."
+            placeholder="Search for products.."
             @keyup.enter="handleSearch"
           />
           <button class="search-submit" @click="handleSearch" aria-label="Search">
@@ -58,12 +58,12 @@
           </svg>
         </button>
 
-        <RouterLink to="/account" class="icon-btn" title="Account">
+        <button class="icon-btn" @click="$emit('open-auth')" title="Account">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
             <circle cx="12" cy="7" r="4"/>
           </svg>
-        </RouterLink>
+        </button>
 
         <RouterLink to="/basket" class="icon-btn" title="Basket">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -93,7 +93,7 @@ const props = defineProps({
   }
 })
 
-defineEmits(['toggle-search'])
+defineEmits(['toggle-search', 'open-auth'])
 
 const router = useRouter()
 const scrolled = ref(false)
@@ -280,4 +280,4 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
   .header-nav { display: none; }
   .header-search { display: none; }
 }
-</style>
+</style> 
