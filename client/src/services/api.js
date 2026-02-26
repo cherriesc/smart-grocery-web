@@ -90,3 +90,22 @@ export const basketService = {
     })
   }
 }
+
+// --- Auth endpoints ---
+export const authService = {
+  /** POST /auth/register */
+  register({ username, email, password }) {
+    return request('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, email, password })
+    })
+  },
+
+  /** POST /auth/login */
+  login({ usernameOrEmail, password }) {
+    return request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ usernameOrEmail, password })
+    })
+  }
+}
