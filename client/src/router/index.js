@@ -5,6 +5,9 @@ import ProductListView from '@/views/ProductListView.vue'
 import ProductDetailView from '@/views/ProductDetailView.vue'
 import BasketView from '@/views/BasketView.vue'
 import SearchView from '@/views/SearchView.vue'
+import PrivacyPolicyView from '@/views/PrivacyPolicyView.vue'
+import HowToUseView from '@/views/HowToUseView.vue'
+import AboutUsView from '@/views/AboutUsView.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
@@ -12,6 +15,9 @@ const routes = [
   { path: '/category/:slug', name: 'ProductList', component: ProductListView },
   { path: '/product/:id', name: 'ProductDetail', component: ProductDetailView },
   { path: '/basket', name: 'Basket', component: BasketView },
+  { path: '/about-us', name: 'AboutUs', component: AboutUsView },
+  { path: '/how-to-use', name: 'HowToUse', component: HowToUseView },
+  { path: '/privacy-policy', name: 'PrivacyPolicy', component: PrivacyPolicyView },
   { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
