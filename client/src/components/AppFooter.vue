@@ -12,6 +12,7 @@
       <div class="footer-links">
         <div class="footer-col">
           <h6 class="footer-col-title">Company</h6>
+          <RouterLink to="/how-to-use" class="footer-link">How to Use</RouterLink>
           <RouterLink to="/privacy-policy" class="footer-link">Privacy & Policy</RouterLink>
           <RouterLink to="/how-to-use" class="footer-link">How to Use</RouterLink>
         </div>
