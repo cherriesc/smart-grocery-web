@@ -89,7 +89,7 @@
         <div class="form-group">
           <label class="form-label">Name</label>
           <input
-            v-model="name"
+            v-model="username"
             type="text"
             class="form-input"
             placeholder="Enter your name"
@@ -156,21 +156,25 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useAuth } from '@/composables/useAuth.js'
+import { authService } from '@/services/api.js'
 
 defineProps({ modelValue: Boolean })
 const emit = defineEmits(['update:modelValue', 'login-success'])
 
+const { setUser } = useAuth()
+
 const mode = ref('login')
 const email = ref('')
 const password = ref('')
-const name = ref('')
+const username = ref('')          // renamed from 'name' to match backend
 const showPassword = ref(false)
 const loading = ref(false)
 const errorMsg = ref('')
 
 function validate() {
-  if (!email.value.trim()) { errorMsg.value = 'Email is required.'; return false }
-  if (!password.value) { errorMsg.value = 'Password is required.'; return false }
+  if (!email.value.trim())    { errorMsg.value = 'Email is required.'; return false }
+  if (!password.value.trim()) { errorMsg.value = 'Password is required.'; return false }
   errorMsg.value = ''
   return true
 }
@@ -179,10 +183,12 @@ async function handleLogin() {
   if (!validate()) return
   loading.value = true
   try {
-    // TODO: replace with real API call
-    // const res = await authService.login({ email, password })
-    // localStorage.setItem('sb_token', res.token)
-    emit('login-success', { email: email.value })
+    const user = await authService.login({
+      usernameOrEmail: email.value.trim(),
+      password: password.value
+    })
+    setUser(user)
+    emit('login-success', user)
     emit('update:modelValue', false)
   } catch (e) {
     errorMsg.value = e.message || 'Login failed.'
@@ -192,13 +198,17 @@ async function handleLogin() {
 }
 
 async function handleSignup() {
-  if (!name.value.trim()) { errorMsg.value = 'Name is required.'; return }
+  if (!username.value.trim()) { errorMsg.value = 'Username is required.'; return }
   if (!validate()) return
   loading.value = true
   try {
-    // TODO: replace with real API call
-    // const res = await authService.signup({ name, email, password })
-    emit('login-success', { email: email.value, name: name.value })
+    const user = await authService.register({
+      username: username.value.trim(),
+      email: email.value.trim(),
+      password: password.value
+    })
+    setUser(user)
+    emit('login-success', user)
     emit('update:modelValue', false)
   } catch (e) {
     errorMsg.value = e.message || 'Sign up failed.'
@@ -210,7 +220,7 @@ async function handleSignup() {
 function handleGoogle() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
   if (!clientId) {
-    errorMsg.value = 'Google login not configured. Add VITE_GOOGLE_CLIENT_ID to .env'
+    errorMsg.value = 'Google login not configured.'
     return
   }
   const redirectUri = `${window.location.origin}/auth/google/callback`
