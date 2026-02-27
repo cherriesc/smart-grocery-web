@@ -4,12 +4,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByCategoryIgnoreCase(String category);
 
     List<Product> findByCategoryIgnoreCaseAndSubcategoryIgnoreCase(String category, String subcategory);
+
+    Optional<Product> findFirstByNameIgnoreCase(String name);
 
     @Query("select distinct p.category from Product p order by p.category")
     List<String> findDistinctCategories();

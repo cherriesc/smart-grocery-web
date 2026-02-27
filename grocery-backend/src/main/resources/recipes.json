@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "title": "Cheddar Sandwich",
+    "tag": "Lunch",
+    "imageUrl": "https://example.com/sandwich.jpg",
+    "shortDescription": "Quick sandwich with cheese and tomatoes.",
+    "prepMinutes": 5,
+    "cookMinutes": 0,
+    "difficulty": "Easy",
+    "steps": [
+      "Take two slices of bread.",
+      "Add cheddar cheese.",
+      "Add sliced tomatoes.",
+      "Serve."
+    ],
+    "ingredients": [
+      { "productName": "White Bread", "quantity": 1 },
+      { "productName": "Cheddar Cheese", "quantity": 1 },
+      { "productName": "Tomatoes", "quantity": 1 }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Pasta with Tomato Sauce",
+    "tag": "Dinner",
+    "imageUrl": "https://example.com/pasta.jpg",
+    "shortDescription": "Simple pasta with canned tomatoes.",
+    "prepMinutes": 10,
+    "cookMinutes": 15,
+    "difficulty": "Easy",
+    "steps": [
+      "Boil spaghetti until ready.",
+      "Heat canned tomatoes in a pan.",
+      "Mix pasta with sauce.",
+      "Serve."
+    ],
+    "ingredients": [
+      { "productName": "Pasta Spaghetti", "quantity": 1 },
+      { "productName": "Canned Tomatoes", "quantity": 2 }
+    ]
+  }
+]
