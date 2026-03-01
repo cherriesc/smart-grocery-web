@@ -5,7 +5,7 @@
         <h1 class="intro-title">How smartbasket work</h1>
 
         <div class="intro-grid">
-          <div class="intro-image-wrap card">
+          <div class="intro-image-wrap">
             <img
               class="intro-image"
               src="/how-smartbasket-works.png"
@@ -80,7 +80,7 @@ const steps = [
 const tabs = [
   {
     id: 'first',
-    label: 'First tab',
+    label: '1. Build',
     title: '1. Start with your shopping list',
     description:
       'Enter the products you need using the search bar. Add items one by one to your basket. You can search by product name (e.g. milk, pasta, chicken breast). Smartbasket builds your list in real time.',
@@ -93,7 +93,7 @@ const tabs = [
   },
   {
     id: 'second',
-    label: 'Second tab',
+    label: '2. Compare',
     title: '2. We compare Tesco, ASDA, Lidl & ALDI',
     description:
       'Once your basket is ready, Smartbasket automatically shows you where your basket costs less.',
@@ -105,7 +105,7 @@ const tabs = [
   },
   {
     id: 'third',
-    label: 'Third tab',
+    label: '3. Optimize',
     title: '3. Review alternatives & optimize',
     description:
       'Not happy with the total? You can explore alternative products to reduce your cost. Swap brands, compare sizes, or choose store-brand equivalents to optimise your basket.',
@@ -113,7 +113,7 @@ const tabs = [
   },
   {
     id: 'fourth',
-    label: 'Fourth tab',
+    label: '4. Save',
     title: '4. Choose where to shop & save',
     description:
       'Smartbasket shows which supermarket offers the lowest total for your basket. You can then decide where to shop.',
@@ -157,13 +157,11 @@ const activeTab = computed(() => tabs.find((tab) => tab.id === activeTabId.value
 .intro-image-wrap {
   overflow: hidden;
   border-radius: var(--radius-md);
-  min-height: 480px;
 }
 
 .intro-image {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
 }
 
 .steps-list {

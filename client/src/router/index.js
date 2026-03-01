@@ -8,6 +8,7 @@ import SearchView from '@/views/SearchView.vue'
 import PrivacyPolicyView from '@/views/PrivacyPolicyView.vue'
 import HowToUseView from '@/views/HowToUseView.vue'
 import AboutUsView from '@/views/AboutUsView.vue'
+import ContactUsView from '@/views/ContactUsView.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/product/:id', name: 'ProductDetail', component: ProductDetailView },
   { path: '/basket', name: 'Basket', component: BasketView },
   { path: '/about-us', name: 'AboutUs', component: AboutUsView },
+  { path: '/contact', name: 'ContactUs', component: ContactUsView },
   { path: '/how-to-use', name: 'HowToUse', component: HowToUseView },
   { path: '/privacy-policy', name: 'PrivacyPolicy', component: PrivacyPolicyView },
   { path: '/:pathMatch(.*)*', redirect: '/' }
