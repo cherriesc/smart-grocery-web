@@ -107,7 +107,7 @@ import AppFooter from '@/components/AppFooter.vue'
 .about-pill {
   width: 100%;
   border-radius: var(--radius-full);
-  background: var(--color-dark-soft);
+  background: var(--color-primary);
   color: var(--color-white);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);

@@ -90,3 +90,16 @@ export const basketService = {
     })
   }
 }
+
+// --- Recipe endpoints ---
+export const recipeService = {
+  /** GET /recipes */
+  getAll() {
+    return request('/recipes')
+  },
+
+  /** GET /recipes/:id */
+  getById(id) {
+    return request(`/recipes/${id}`)
+  }
+}
