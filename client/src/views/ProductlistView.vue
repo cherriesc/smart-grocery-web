@@ -59,6 +59,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppFooter from '@/components/AppFooter.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import { productService } from '@/services/api.js'
+import { useBasket } from '@/composables/useBasket.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -70,9 +71,19 @@ const totalPages = ref(1)
 const searchQuery = ref('')
 const sortBy = ref('price_asc')
 
+const CATEGORY_NAMES = {
+  'meat-seafood': 'Meat & Seafood',
+  'dairy-eggs': 'Dairy & Eggs',
+  'bakery-bread': 'Bakery & Bread',
+  'fresh-food': 'Fresh Food',
+  'frozen-food': 'Frozen Food',
+  'snacks-beverages': 'Snacks & Beverages',
+}
+
 const categorySlug = computed(() => route.params.slug || '')
 const categoryName = computed(() => {
   if (!categorySlug.value) return 'All Products'
+  if (CATEGORY_NAMES[categorySlug.value]) return CATEGORY_NAMES[categorySlug.value]
   return categorySlug.value
     .split('-')
     .map(w => w.charAt(0).toUpperCase() + w.slice(1))
@@ -101,7 +112,6 @@ function goToPage(p) {
   currentPage.value = p
 }
 
-import { useBasket } from '@/composables/useBasket.js'
 const { addItem } = useBasket()
 
 function addToBasket(product) {

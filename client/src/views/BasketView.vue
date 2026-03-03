@@ -94,6 +94,71 @@
           </tfoot>
         </table>
       </div>
+
+      <!-- ───────────────────────────────────────────
+           AI RECIPE SECTION
+           Only shown when user is logged in + basket has items
+      ─────────────────────────────────────────────── -->
+      <div v-if="basketItems.length && user" class="ai-recipe-section">
+        <div class="ai-recipe-header">
+          <div class="ai-badge">✦ AI</div>
+          <div>
+            <h2 class="ai-recipe-title">Recipe Ideas from Your Basket</h2>
+            <p class="ai-recipe-subtitle">Let AI suggest what you can cook with the items in your basket.</p>
+          </div>
+        </div>
+
+        <button
+          class="btn-generate"
+          :disabled="recipeLoading"
+          @click="generateRecipes"
+        >
+          <span v-if="recipeLoading" class="btn-spinner"></span>
+          <span v-else>✦</span>
+          {{ recipeLoading ? 'Generating recipes…' : 'Generate Recipes' }}
+        </button>
+
+        <!-- Error state -->
+        <div v-if="recipeError" class="recipe-error">
+          {{ recipeError }}
+        </div>
+
+        <!-- Recipe cards -->
+        <div v-if="recipes.length" class="recipe-grid">
+          <div
+            v-for="(recipe, idx) in recipes"
+            :key="idx"
+            class="recipe-card"
+          >
+            <div class="recipe-card-index">{{ String(idx + 1).padStart(2, '0') }}</div>
+            <h3 class="recipe-card-name">{{ recipe.name }}</h3>
+
+            <div class="recipe-section">
+              <p class="recipe-section-label">Ingredients</p>
+              <ul class="recipe-ingredients">
+                <li v-for="(ing, i) in recipe.ingredients" :key="i">
+                  <span class="ing-qty">{{ ing.quantity }}</span>
+                  <span class="ing-name">{{ ing.item }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="recipe-section">
+              <p class="recipe-section-label">Steps</p>
+              <ol class="recipe-steps">
+                <li v-for="(step, s) in recipe.steps" :key="s">{{ step }}</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Not logged in nudge -->
+      <div v-else-if="basketItems.length && !user" class="ai-recipe-locked">
+        <span class="ai-badge">✦ AI</span>
+        <p><RouterLink to="/profile">Sign in</RouterLink> to generate recipe ideas from your basket.</p>
+      </div>
+
     </div>
 
     <AppFooter />
@@ -104,9 +169,12 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useBasket } from '@/composables/useBasket.js'
+import { useAuth } from '@/composables/useAuth.js'
 
 const { items: basketItems, increaseQty, decreaseQty, removeItem } = useBasket()
+const { user } = useAuth()
 
+// ── Price comparison ──────────────────────────────────────────────────────────
 const stores = ref([])
 const compareData = ref(null)
 const loading = ref(false)
@@ -125,7 +193,6 @@ async function fetchCompare() {
     })
     compareData.value = await res.json()
 
-    // Build stores list from response
     if (compareData.value?.storeBreakdowns?.length) {
       stores.value = compareData.value.storeBreakdowns.map(s => ({
         id: s.storeId,
@@ -139,19 +206,18 @@ async function fetchCompare() {
   }
 }
 
-import { useAuth } from '@/composables/useAuth.js'
-const { user } = useAuth()
+watch(basketItems, fetchCompare, { deep: true })
+onMounted(fetchCompare)
 
+// ── Save basket ───────────────────────────────────────────────────────────────
 async function saveBasket() {
   if (!user.value) return
   const name = prompt('Name this shopping list:')
   if (!name?.trim()) return
-  
-  // Fetch existing lists
+
   const res = await fetch(`http://localhost:8080/api/users/${user.value.userId}/shopping-lists`)
   const lists = await res.json()
-  
-  // Append new list
+
   const newList = {
     id: Date.now(),
     name: name.trim(),
@@ -159,7 +225,7 @@ async function saveBasket() {
     items: basketItems.value
   }
   lists.push(newList)
-  
+
   await fetch(`http://localhost:8080/api/users/${user.value.userId}/shopping-lists`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -168,10 +234,51 @@ async function saveBasket() {
   alert(`"${name}" saved!`)
 }
 
-// Refetch whenever basket changes
-watch(basketItems, fetchCompare, { deep: true })
-onMounted(fetchCompare)
+// ── AI Recipes ────────────────────────────────────────────────────────────────
+const recipeLoading = ref(false)
+const recipeError = ref(null)
+const recipes = ref([])
 
+async function generateRecipes() {
+  if (!basketItems.value.length || recipeLoading.value) return
+
+  recipeLoading.value = true
+  recipeError.value = null
+  recipes.value = []
+
+  try {
+    const body = {
+      items: basketItems.value.map(i => ({ productId: i.id, quantity: i.quantity }))
+    }
+
+    const res = await fetch('http://localhost:8080/api/ai/recipes/from-basket', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`)
+    }
+
+    const data = await res.json()
+
+    if (data.error) {
+      recipeError.value = `Could not generate recipes: ${data.error}`
+    } else if (Array.isArray(data.recipes)) {
+      recipes.value = data.recipes
+    } else {
+      recipeError.value = 'Unexpected response from AI. Please try again.'
+    }
+  } catch (e) {
+    console.error('Recipe generation failed', e)
+    recipeError.value = 'Something went wrong. Please try again.'
+  } finally {
+    recipeLoading.value = false
+  }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function formatPrice(val) {
   if (val == null) return '–'
   return `£${Number(val).toFixed(2)}`
@@ -201,7 +308,6 @@ function isBestStore(storeId) {
   if (!totals.length) return false
   return getSubtotal(storeId) === Math.min(...totals)
 }
-
 </script>
 
 <style scoped>
@@ -273,9 +379,7 @@ td {
   align-items: flex-start;
   gap: var(--space-3);
 }
-.item-img {
-  flex-shrink: 0;
-}
+.item-img { flex-shrink: 0; }
 .item-img img {
   width: 48px;
   height: 48px;
@@ -336,9 +440,7 @@ td {
   text-align: center;
 }
 
-.unavailable {
-  color: var(--color-grey-300);
-}
+.unavailable { color: var(--color-grey-300); }
 
 .price-best .price {
   color: var(--color-success);
@@ -353,9 +455,7 @@ td {
   border-top: 1px solid var(--color-border);
 }
 .subtotal-row { background: var(--color-grey-50); }
-.total-row {
-  background: var(--color-grey-100);
-}
+.total-row { background: var(--color-grey-100); }
 .total-row td {
   padding-top: var(--space-4);
   padding-bottom: var(--space-4);
@@ -372,5 +472,216 @@ td {
   0% { opacity: 1; }
   50% { opacity: 0.4; }
   100% { opacity: 1; }
+}
+
+/* ─── AI Recipe Section ─────────────────────────────────────────────────────── */
+.ai-recipe-section {
+  margin: var(--space-10) 0 var(--space-16);
+  padding: var(--space-8);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-grey-50, #fafafa);
+}
+
+.ai-recipe-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.ai-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-dark);
+  color: var(--color-white);
+  border-radius: var(--radius-full, 9999px);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.ai-recipe-title {
+  font-size: var(--font-size-xl);
+  font-family: var(--font-heading);
+  color: var(--color-dark);
+  margin-bottom: var(--space-1);
+}
+
+.ai-recipe-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-grey-500);
+}
+
+/* Generate button */
+.btn-generate {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-dark);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  margin-bottom: var(--space-6);
+}
+.btn-generate:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+.btn-generate:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner */
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error */
+.recipe-error {
+  padding: var(--space-4);
+  background: #fff3f3;
+  border: 1px solid #f5c6c6;
+  border-radius: var(--radius-md);
+  color: #c0392b;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+}
+
+/* Recipe grid */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.recipe-card {
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.recipe-card:nth-child(2) { animation-delay: 0.08s; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.recipe-card-index {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-heading);
+  color: var(--color-grey-400, #aaa);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.recipe-card-name {
+  font-size: var(--font-size-lg);
+  font-family: var(--font-heading);
+  color: var(--color-dark);
+  margin-bottom: var(--space-4);
+  line-height: 1.3;
+}
+
+.recipe-section {
+  margin-bottom: var(--space-4);
+}
+
+.recipe-section-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-grey-500);
+  margin-bottom: var(--space-2);
+}
+
+.recipe-ingredients {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.recipe-ingredients li {
+  display: flex;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  align-items: baseline;
+}
+
+.ing-qty {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  min-width: 60px;
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+}
+
+.ing-name {
+  color: var(--color-dark);
+}
+
+.recipe-steps {
+  padding-left: var(--space-5);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.recipe-steps li {
+  font-size: var(--font-size-sm);
+  color: var(--color-grey-700);
+  line-height: 1.6;
+}
+
+/* Locked state (not logged in) */
+.ai-recipe-locked {
+  margin: var(--space-8) 0 var(--space-12);
+  padding: var(--space-5) var(--space-6);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-grey-500);
+}
+
+.ai-recipe-locked a {
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 </style>

@@ -110,6 +110,7 @@ export const authService = {
     })
   }
 }
+
 // --- Recipe endpoints ---
 export const recipeService = {
   /** GET /recipes */
@@ -120,5 +121,22 @@ export const recipeService = {
   /** GET /recipes/:id */
   getById(id) {
     return request(`/recipes/${id}`)
+  }
+}
+
+// --- AI endpoints ---
+export const aiService = {
+  /**
+   * POST /ai/recipes/from-basket
+   * Sends basket items to the AI and returns generated recipes.
+   *
+   * @param {Array<{productId: number, quantity: number}>} items
+   * @returns {Promise<{ recipes: Array }>}
+   */
+  generateRecipesFromBasket(items) {
+    return request('/ai/recipes/from-basket', {
+      method: 'POST',
+      body: JSON.stringify({ items })
+    })
   }
 }
