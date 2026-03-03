@@ -101,8 +101,11 @@ function goToPage(p) {
   currentPage.value = p
 }
 
+import { useBasket } from '@/composables/useBasket.js'
+const { addItem } = useBasket()
+
 function addToBasket(product) {
-  console.log('Add to basket:', product)
+  addItem(product)
 }
 
 watch([currentPage, sortBy, categorySlug], fetchProducts)
@@ -166,5 +169,17 @@ onMounted(fetchProducts)
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+.products-grid {
+  margin-bottom: var(--space-12);
+}
+
+.empty-state {
+  margin-bottom: var(--space-12);
+}
+
+.pagination {
+  margin-bottom: var(--space-12);
 }
 </style>

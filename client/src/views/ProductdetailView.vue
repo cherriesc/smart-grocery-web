@@ -155,8 +155,11 @@ function formatUnitPrice(listing) {
   return `${formatPrice(listing.unitPrice)} per 100g`
 }
 
+import { useBasket } from '@/composables/useBasket.js'
+const { addItem } = useBasket()
+
 function addToBasket() {
-  console.log('Add to basket:', product.value, selectedSize.value)
+  if (product.value) addItem(product.value)
 }
 
 onMounted(async () => {

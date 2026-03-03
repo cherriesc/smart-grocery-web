@@ -1,5 +1,6 @@
 package com.grocery.backend.product;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,6 +11,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryIgnoreCase(String category);
 
     List<Product> findByCategoryIgnoreCaseAndSubcategoryIgnoreCase(String category, String subcategory);
+
+    List<Product> findByCategoryIgnoreCaseAndNameContainingIgnoreCase(String category, String name);
+
+    List<Product> findByNameContainingIgnoreCase(String name);
+
+    List<Product> findAll(Sort sort);
 
     @Query("select distinct p.category from Product p order by p.category")
     List<String> findDistinctCategories();
