@@ -62,7 +62,7 @@
             :aria-selected="activeTab === 'ingredients'"
             @click="activeTab = 'ingredients'"
           >
-            Ingredients & Nutritional Value
+            Ingredients
           </button>
           <button
             type="button"
@@ -78,7 +78,7 @@
       </section>
 
       <section class="container content-section" v-if="activeTab === 'ingredients'">
-        <div class="content-grid">
+        <div class="content-grid" :class="{ 'content-grid--single': !nutritionPairs.length }">
           <article class="card ingredients-card">
             <div class="ingredients-header">
               <h2 class="content-title">Ingredients</h2>
@@ -115,16 +115,13 @@
             </div>
           </article>
 
-          <article class="card nutrition-card">
+          <article class="card nutrition-card" v-if="nutritionPairs.length">
             <h2 class="content-title">Nutritional Value</h2>
             <div class="nutrition-summary" v-if="nutritionPairs.length">
               <div class="nutrition-row" v-for="pair in nutritionPairs" :key="pair.key">
                 <p>{{ pair.label }}:</p>
                 <p>{{ pair.value }}</p>
               </div>
-            </div>
-            <div v-else class="empty-state nutrition-empty">
-              <p>No nutrition data available.</p>
             </div>
           </article>
         </div>
@@ -372,6 +369,10 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: var(--space-6);
+}
+
+.content-grid--single {
+  grid-template-columns: 1fr;
 }
 
 .ingredients-card,
