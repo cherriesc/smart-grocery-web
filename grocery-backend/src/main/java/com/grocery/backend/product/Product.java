@@ -28,8 +28,8 @@ public class Product {
     @Column(name = "unit_unit", nullable = false)
     private String unitUnit; // "G", "ML", "PCS"
 
-    @Column(name = "image_url")
-    private String imageUrl;
+//    @Column(name = "image_url")
+//    private String imageUrl;
 
     public Product() {}
 
@@ -55,16 +55,22 @@ public class Product {
     public String getSubcategory() { return subcategory; }
     public BigDecimal getUnitSize() { return unitSize; }
     public String getUnitUnit() { return unitUnit; }
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+//    public String getImageUrl() { return imageUrl; }
+//    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-//    // auto generated photos from unsplash
-//    @Transient
-//    public String getImageUrl() {
-//        if (this.name == null) return null;
-//        String query = this.name.toLowerCase() .replace(" ", "+");
-//        return "https://source.unsplash.com/400x400/?" + query + ",food";
-//    }
+    @Transient
+    public String getImageUrl() {
+        if (this.name == null) return null;
+
+        String fileName = this.name
+                .toLowerCase()
+                .replace(" ", "-")
+                .replace("&", "")
+                .replace(",", "");
+
+        return "/product-images/" + fileName + ".png";
+    }
+
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
