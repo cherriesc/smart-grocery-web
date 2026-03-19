@@ -12,7 +12,7 @@
         <form
           name="contact2"
           method="POST"
-          action="/success"
+          action="/success.html"
           data-netlify="true"
           data-netlify-recaptcha="true"
           data-netlify-honeypot="bot-field"
