@@ -10,7 +10,7 @@
 
       <section class="contact-grid">
         <form
-          name="contact"
+          name="contact2"
           method="POST"
           action="/success"
           data-netlify="true"
@@ -20,7 +20,7 @@
           class="contact-form card"
         >
           <!-- important -->
-          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="form-name" value="contact2" />
           <input type="hidden" name="bot-field" />
 
           <div class="form-row">
