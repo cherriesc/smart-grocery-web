@@ -7,14 +7,32 @@
 
       <section class="about-hero">
         <div class="about-hero__left">
-          <h1 class="about-title">Helping You Save Up to 25% on Your Weekly Groceries</h1>
+          <h2 class="about-title">Stop overpaying for groceries</h2>
+
+          <p class="about-subtext">
+            See where your basket is cheapest - in seconds.
+          </p>
+
 
           <div class="about-pills">
-            <p class="about-pill">Compare grocery prices across multiple stores</p>
-            <p class="about-pill">Organise your basket where it&apos;s cheapest</p>
-            <p class="about-pill">Discover alternative products at lower prices</p>
-            <p class="about-pill">Make smarter shopping decisions in seconds.</p>
+          <div class="about-pill">
+            <span class="about-check">✓</span>
+            Compare prices across multiple stores
           </div>
+          <div class="about-pill">
+            <span class="about-check">✓</span>
+            Find the cheapest basket instantly
+          </div>
+          <div class="about-pill">
+            <span class="about-check">✓</span>
+            Discover better alternatives
+          </div>
+          <div class="about-pill">
+            <span class="about-check">✓</span>
+            Make smarter shopping decisions
+          </div>
+        </div>
+
         </div>
 
         <div class="about-hero__right">
@@ -33,23 +51,28 @@
 
         <div class="about-story__right">
           <article class="about-block">
-            <h2 class="about-subtitle">Created by a small team of students</h2>
+            <h3 class="about-subtitle">Built to solve a real problem</h3>
             <p>
-              Smart Basket was created by a small team of students who were frustrated by rising grocery prices. We
-              realised that most shoppers don&apos;t overpay intentionally, they simply lack visibility.
+              We’re a small team of students who were frustrated by rising grocery prices and the lack of transparency between stores.
             </p>
             <p>
-              Prices vary significantly between supermarkets, yet comparing them manually is time-consuming and
-              inefficient. We decided to build a solution.
+              So we built Smart Basket - a simple tool that helps you find the best deals instantly.
+            </p>
+            <p>
+              This matters because the same basket can cost up to 20-30% more depending on where you shop.
             </p>
           </article>
 
           <article class="about-block">
-            <h2 class="about-subtitle">Our mission: Helping you save more.</h2>
+            <h3 class="about-subtitle">Our mission</h3>
             <p>
-              Our mission is to make grocery shopping more affordable by providing clear, comparable pricing
-              information across stores. No hidden complexity. Just simple, transparent tools that help you spend less,
-              save more and shop smarter.
+              Our mission is simple: help you spend less on groceries without extra effort.
+            </p>
+            <p>
+              No hidden tricks. No complex tools. Just clear, transparent price comparisons.
+            </p>
+            <p>
+              So you always know where you’re getting the best value.
             </p>
           </article>
         </div>
@@ -75,6 +98,15 @@ import AppFooter from '@/components/AppFooter.vue'
   margin-bottom: var(--space-8);
 }
 
+/* Page title — largest, centred, normal casing, moderate letter-spacing */
+.about-kicker {
+  font-size: var(--font-size-4xl);
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.02em;
+  color: var(--color-dark);
+}
+
 .about-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
@@ -82,17 +114,11 @@ import AppFooter from '@/components/AppFooter.vue'
   align-items: start;
 }
 
-.about-kicker {
-  letter-spacing: 3px;
-  font-size: var(--font-size-3xl);
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-dark);
-}
-
+/* Section heading — clearly smaller than page title */
 .about-title {
   max-width: 640px;
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-2xl);
+  font-family: var(--font-heading);
   line-height: var(--line-height-tight);
   margin-bottom: var(--space-8);
 }
@@ -105,15 +131,20 @@ import AppFooter from '@/components/AppFooter.vue'
 }
 
 .about-pill {
-  width: 100%;
-  border-radius: var(--radius-full);
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
-  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: var(--color-primary-subtle);
+  color: var(--color-dark);
+
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
+
 
 .about-image-frame {
   position: relative;
@@ -128,6 +159,20 @@ import AppFooter from '@/components/AppFooter.vue'
   min-height: 320px;
   object-fit: cover;
 }
+
+.about-subtext {
+  max-width: 520px;
+  font-size: var(--font-size-base);
+  color: var(--color-grey-600);
+  margin-bottom: var(--space-6);
+}
+
+.about-check {
+  color: var(--color-primary);
+  font-weight: bold;
+  font-size: 14px;
+}
+
 
 .about-story {
   margin-top: var(--space-12);
@@ -151,18 +196,24 @@ import AppFooter from '@/components/AppFooter.vue'
   gap: var(--space-8);
 }
 
+/* Sub-heading — one step below section heading */
+.about-subtitle {
+  font-size: var(--font-size-xl);
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-4);
+  color: var(--color-dark);
+}
+
+/* Body text — readable, not tiny */
 .about-block p {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
   color: var(--color-grey-700);
 }
 
 .about-block p + p {
   margin-top: var(--space-3);
-}
-
-.about-subtitle {
-  font-size: var(--font-size-3xl);
-  margin-bottom: var(--space-4);
 }
 
 @media (max-width: 1024px) {
@@ -181,16 +232,16 @@ import AppFooter from '@/components/AppFooter.vue'
     padding-top: var(--space-6);
   }
 
-  .about-title {
-    font-size: var(--font-size-2xl);
+  .about-kicker {
+    font-size: var(--font-size-3xl);
   }
 
-  .about-kicker {
-    font-size: var(--font-size-2xl);
+  .about-title {
+    font-size: var(--font-size-xl);
   }
 
   .about-pill {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
   }
 }
 </style>

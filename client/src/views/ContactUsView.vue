@@ -9,44 +9,93 @@
       </header>
 
       <section class="contact-grid">
-        <form class="contact-form card" @submit.prevent>
+        <form
+          name="contact"
+          method="POST"
+          
+          data-netlify="true"
+          data-netlify-recaptcha="true"
+          data-netlify-honeypot="bot-field"
+          enctype="multipart/form-data"
+          class="contact-form card"
+        >
+          <!-- important -->
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="bot-field" />
+
           <div class="form-row">
             <div class="form-group">
-              <label for="contact-name" class="form-label">Name</label>
-              <input id="contact-name" type="text" class="form-input" placeholder="John Carter" />
+              <label class="form-label">Name</label>
+              <input
+                name="name"
+                type="text"
+                class="form-input"
+                placeholder="John Carter"
+                required
+              />
             </div>
+
             <div class="form-group">
-              <label for="contact-email" class="form-label">Email</label>
-              <input id="contact-email" type="email" class="form-input" placeholder="example@email.com" />
+              <label class="form-label">Email</label>
+              <input
+                name="email"
+                type="email"
+                class="form-input"
+                placeholder="example@email.com"
+                required
+              />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="contact-phone" class="form-label">Phone</label>
-              <input id="contact-phone" type="tel" class="form-input" placeholder="(123) 456 - 789" />
+              <label class="form-label">Phone</label>
+              <input
+                name="phone"
+                type="tel"
+                class="form-input"
+                placeholder="(123) 456 - 789"
+              />
             </div>
+
             <div class="form-group">
-              <label for="contact-company" class="form-label">Company</label>
-              <input id="contact-company" type="text" class="form-input" placeholder="Facebook" />
+              <label class="form-label">Company</label>
+              <input
+                name="company"
+                type="text"
+                class="form-input"
+                placeholder="Facebook"
+              />
             </div>
           </div>
 
           <div class="form-group">
-            <label for="contact-message" class="form-label">Leave us message</label>
+            <label class="form-label">Leave us message</label>
             <textarea
-              id="contact-message"
+              name="message"
               class="form-input form-textarea"
               rows="6"
               placeholder="Please type your message here..."
+              required
             ></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary contact-submit">Send message</button>
+          <!-- FILE -->
+          <div class="form-group">
+            <label class="form-label">Attach file</label>
+            <input type="file" name="attachment" class="form-input" />
+          </div>
+
+          <!-- CAPTCHA -->
+          <div data-netlify-recaptcha="true"></div>
+
+          <button type="submit" class="btn btn-primary contact-submit">
+            Send message
+          </button>
         </form>
 
         <aside class="contact-image card">
-          <img :src="contactImageUrl" alt="People using Smart Basket app in a kitchen" />
+          <img :src="contactImageUrl" alt="Smart Basket" />
         </aside>
       </section>
     </main>
@@ -54,6 +103,7 @@
     <AppFooter />
   </div>
 </template>
+
 
 <script setup>
 import AppFooter from '@/components/AppFooter.vue'

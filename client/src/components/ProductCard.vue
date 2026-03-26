@@ -1,8 +1,9 @@
 <template>
   <RouterLink :to="`/product/${product.id}`" class="product-card card">
     <div class="product-card__image">
-      <img v-if="product.imageUrl" :src="product.imageUrl" :alt="product.name" />
+    <img v-if="product.imageUrl" :src="product.imageUrl" :alt="product.name" />
       <div v-else class="img-placeholder">
+
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
           <polyline points="21 15 16 10 5 21"/>
@@ -11,7 +12,9 @@
 
       <span class="product-card__tag badge" v-if="product.category">{{ product.category }}</span>
 
-      <button class="product-card__add btn btn-primary btn-sm" @click.prevent="$emit('add-to-basket', product)">
+      <button
+        class="product-card__add btn btn-primary btn-sm"
+        @click.prevent="handleAdd(product)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
         </svg>
@@ -28,13 +31,33 @@
 </template>
 
 <script setup>
-defineProps({
-  product: {
-    type: Object,
-    required: true
-  }
+import { computed } from 'vue'
+import { useBasket } from '@/composables/useBasket.js'
+
+
+const props = defineProps({
+  product: { type: Object, required: true }
 })
 defineEmits(['add-to-basket'])
+
+const { addItem } = useBasket()
+
+/**
+ * Prefer the DB imageUrl. If it's missing or still points to the old broken
+ * Unsplash/Spoonacular hosts, fall back to our local Wikimedia map.
+ */
+
+const resolvedImage = computed(() => {
+  if (props.product.imageUrl) return props.product.imageUrl
+  const file = props.product.name.toLowerCase().replaceAll(" ", "-")
+  return `/api/product-images/${file}.png`
+})
+
+
+
+function handleAdd(product) {
+  addItem(product)
+}
 
 function formatPrice(price) {
   if (price == null) return '–'

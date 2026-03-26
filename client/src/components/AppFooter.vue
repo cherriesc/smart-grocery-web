@@ -27,7 +27,6 @@
       <div class="container">
         <p class="footer-copy">
           Copyright © 2026 Smartbasket | All Rights Reserved |
-          <RouterLink to="/terms" class="footer-legal-link">Terms and Conditions</RouterLink> |
           <RouterLink to="/privacy-policy" class="footer-legal-link">Privacy Policy</RouterLink>
         </p>
       </div>

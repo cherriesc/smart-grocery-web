@@ -216,19 +216,29 @@ function goBack() {
 function addAllToBasket() {
   ingredientsList.value.forEach((item, index) => {
     const quantity = Math.max(1, Number(item.quantity) || 1)
+    const rawName = item.productName || item.name || ''
+
+    const slug = rawName
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+
     const mappedProduct = {
-      id: item.productId ?? `${route.params.id}-${index}-${item.productName}`,
-      name: item.productName,
+      id: item.productId ?? `${route.params.id}-${index}-${slug}`,
+      name: rawName,
       brand: recipe.value?.title || 'Recipe',
-      imageUrl: item.imageUrl || null,
+      imageUrl: item.imageUrl || `/api/product-images/${slug}.png`,
       storePrices: item.storePrices || {}
     }
 
-    for (let i = 0; i < quantity; i += 1) {
+    for (let i = 0; i < quantity; i++) {
       addItem(mappedProduct)
     }
   })
 }
+
+
+
 
 onMounted(async () => {
   try {

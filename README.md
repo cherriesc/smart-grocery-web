@@ -13,8 +13,7 @@ Backend: Spring Boot + PostgreSQL.
 2. Database:  PostgreSQL
 3. Frontend:
    - Node.js (v22)
-   - Vue (v3.5)
-   - AJAX - Axios
+   - Vue (v3.5) + Vite
 4. Containerization: Docker
 5. Build Tool: Maven
 6. API: REST

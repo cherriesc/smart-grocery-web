@@ -5,7 +5,7 @@
       <div class="container hero-inner">
         <div class="hero-content">
           <h1 class="hero-title">Shop smart,<br/><span class="hero-accent">save more.</span></h1>
-          <p class="hero-subtitle">Tired of watching your grocery bill climb? Smart Basket instantly compares your shopping list across every major UK supermarket, from Tesco to Aldi, ensuring you never overpay for your weekly shop again.</p>
+          <p class="hero-subtitle">Tired of watching your grocery bill climb? Smart Basket instantly compares your shopping list across major UK supermarkets, from Tesco to Aldi, ensuring you never overpay for your weekly shop again.</p>
           <div class="hero-search search-bar">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -83,14 +83,13 @@ const loading = ref(true)
 const topDeals = ref([])
 
 const categories = [
-  { name: 'Bakery', slug: 'bakery', icon: '🍞' },
-  { name: 'Dairy & Eggs', slug: 'dairy-eggs', icon: '🥛' },
-  { name: 'Pantry', slug: 'pantry-items', icon: '🥫' },
-  { name: 'Meat & Fish', slug: 'meat-fish', icon: '🥩' },
-  { name: 'Fruit & Veg', slug: 'fruit-veg', icon: '🥦' },
-  { name: 'Drinks', slug: 'drinks', icon: '🧃' },
-  { name: 'Frozen', slug: 'frozen', icon: '❄️' },
-  { name: 'Snacks', slug: 'snacks', icon: '🍿' },
+  { name: 'Fresh Food',         slug: 'fresh-food',       icon: '🥦' },
+  { name: 'Bakery',             slug: 'bakery',           icon: '🍞' },
+  { name: 'Dairy & Eggs',       slug: 'dairy-eggs',       icon: '🥛' },
+  { name: 'Meat & Seafood',     slug: 'meat-seafood',     icon: '🥩' },
+  { name: 'Frozen Food',        slug: 'frozen-food',      icon: '❄️' },
+  { name: 'Pantry Items',       slug: 'pantry-items',     icon: '🥫' },
+  { name: 'Snacks & Beverages', slug: 'snacks-beverages', icon: '🍿' },
 ]
 
 function handleHeroSearch() {
@@ -99,9 +98,11 @@ function handleHeroSearch() {
   }
 }
 
+import { useBasket } from '@/composables/useBasket.js'
+const { addItem } = useBasket()
+
 function addToBasket(product) {
-  // TODO: integrate with basket store / API
-  console.log('Add to basket:', product)
+  addItem(product)
 }
 
 onMounted(async () => {

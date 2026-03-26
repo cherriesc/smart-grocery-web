@@ -35,7 +35,7 @@
             <div class="recipe-card__image-wrap">
               <img
                 v-if="recipe.imageUrl"
-                :src="recipe.imageUrl"
+                :src="`https://smart-grocery-web.onrender.com${recipe.imageUrl}`"
                 :alt="recipe.title"
                 class="recipe-card__image"
               />

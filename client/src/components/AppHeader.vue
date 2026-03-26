@@ -58,7 +58,7 @@
           </svg>
         </button>
 
-        <button class="icon-btn" @click="$emit('open-auth')" title="Account">
+        <button class="icon-btn" @click="handleProfileClick" title="Account">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
             <circle cx="12" cy="7" r="4"/>
@@ -80,34 +80,38 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useAuth } from '@/composables/useAuth.js'
 import { useRouter } from 'vue-router'
 
+const { isLoggedIn } = useAuth()
+const router = useRouter()
+
 const props = defineProps({
-  showSearch: {
-    type: Boolean,
-    default: true
-  },
-  basketCount: {
-    type: Number,
-    default: 0
-  }
+  showSearch: { type: Boolean, default: true },
+  basketCount: { type: Number, default: 0 }
 })
 
-defineEmits(['toggle-search', 'open-auth'])
+const emit = defineEmits(['toggle-search', 'open-auth'])
 
-const router = useRouter()
+function handleProfileClick() {
+  if (isLoggedIn.value) {
+    router.push('/profile')
+  } else {
+    emit('open-auth')
+  }
+}
 const scrolled = ref(false)
 const categoriesOpen = ref(false)
 const searchQuery = ref('')
 
 const categories = [
-  { name: 'Bakery', slug: 'bakery' },
-  { name: 'Dairy & Eggs', slug: 'dairy-eggs' },
-  { name: 'Pantry Items', slug: 'pantry-items' },
-  { name: 'Meat & Fish', slug: 'meat-fish' },
-  { name: 'Fruit & Veg', slug: 'fruit-veg' },
-  { name: 'Drinks', slug: 'drinks' },
-  { name: 'Frozen', slug: 'frozen' },
+  { name: 'Fresh Food',          slug: 'fresh-food' },
+  { name: 'Bakery',              slug: 'bakery' },
+  { name: 'Dairy & Eggs',        slug: 'dairy-eggs' },
+  { name: 'Meat & Seafood',      slug: 'meat-seafood' },
+  { name: 'Frozen Food',         slug: 'frozen-food' },
+  { name: 'Pantry Items',        slug: 'pantry-items' },
+  { name: 'Snacks & Beverages',  slug: 'snacks-beverages' },
 ]
 
 function toggleCategories() {

@@ -3,9 +3,9 @@
     <div class="container policy-page">
       <header class="policy-header">
         <h1 class="policy-title">Privacy Policy</h1>
-        <p class="policy-updated">Last Updated: February 25, 2026</p>
+        <p class="policy-updated">Last Updated: March 18, 2026</p>
         <p class="policy-intro">
-          This page explains what data we collect, why we collect it, and how we use it to provide our services.
+          This page explains what data we collect, why we collect it and how we use it to provide our services.
         </p>
       </header>
 
@@ -88,7 +88,26 @@
       </section>
 
       <section class="policy-section card">
-        <h2>4. Legal Basis for Processing (UK GDPR)</h2>
+        <h2>4. Cookies and Local Storage</h2>
+        <p>We use cookies and similar technologies (such as local storage) to improve your experience on our website. These technologies are used to:</p>
+        <ul>
+          <li>
+            Maintain your session (e.g., when you are logged in).
+          </li>
+          <li>
+            Remember your preferences.
+          </li>
+          <li>
+            Ensure the website functions properly.
+          </li>
+        </ul>
+        <p>
+          You can choose to accept or decline cookies when visiting our website. Some features may not function correctly without them.
+        </p>
+      </section>
+
+      <section class="policy-section card">
+        <h2>5. Legal Basis for Processing (UK GDPR)</h2>
         <p>Under the UK General Data Protection Regulation (UK GDPR), we process personal data based on:</p>
         <ul>
           <li>
@@ -108,24 +127,22 @@
       </section>
 
       <section class="policy-section card">
-        <h2>5. Data Sharing</h2>
+        <h2>6. Data Sharing</h2>
         <p>
           <strong>Important Note:</strong>
-          Smart Basket is currently a student project operating in a local development environment and is not yet
-          publicly hosted.
+          Smart Basket is an academic project developed for educational purposes. The application may be deployed and made accessible online.
         </p>
         <ul>
           <li>We do not sell, rent, or trade personal data to third parties.</li>
           <li>
-            If the website is deployed in the future, data may be processed by a hosting provider acting strictly as a
-            data processor under secure conditions.
+            If deployed, data may be processed by trusted third-party hosting providers (e.g., cloud infrastructure services) acting as data processors under appropriate safeguards.
           </li>
-          <li>We do not share data for marketing or advertising.</li>
+          <li>We do not use your data for marketing or advertising purposes.</li>
         </ul>
       </section>
 
       <section class="policy-section card">
-        <h2>6. Data Retention</h2>
+        <h2>7. Data Retention</h2>
         <p>We retain personal data only for as long as necessary:</p>
         <ul>
           <li><strong>Account Data:</strong> Stored for as long as the user account remains active.</li>
@@ -139,7 +156,7 @@
       </section>
 
       <section class="policy-section card">
-        <h2>7. Your Data Protection Rights</h2>
+        <h2>8. Your Data Protection Rights</h2>
         <p>Under UK GDPR, you have the following rights:</p>
         <ul>
           <li><strong>Right of Access:</strong> Request a copy of the data we hold about you.</li>
@@ -161,7 +178,7 @@
       </section>
 
       <section class="policy-section card">
-        <h2>8. Security</h2>
+        <h2>9. Security</h2>
         <p>
           We take reasonable, proportionate steps to protect personal data within the scope of this student project.
         </p>
@@ -191,12 +208,17 @@ import AppFooter from '@/components/AppFooter.vue'
   padding-bottom: var(--space-12);
 }
 
+/* ── Page title: centred, biggest, moderate letter-spacing, normal casing ── */
 .policy-header {
+  text-align: center;
   margin-bottom: var(--space-8);
 }
 
 .policy-title {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-4xl);
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.02em;
   color: var(--color-dark);
   margin-bottom: var(--space-2);
 }
@@ -208,7 +230,11 @@ import AppFooter from '@/components/AppFooter.vue'
 }
 
 .policy-intro {
-  max-width: 760px;
+  max-width: 680px;
+  margin: 0 auto;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-grey-700);
 }
 
 .policy-section {
@@ -217,20 +243,28 @@ import AppFooter from '@/components/AppFooter.vue'
   border-radius: var(--radius-lg);
 }
 
+/* Section heading — clearly below page title */
 .policy-section h2 {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-semibold);
   margin-bottom: var(--space-3);
   color: var(--color-dark);
 }
 
+/* Sub-heading within a section */
 .policy-section h3 {
   font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   margin-top: var(--space-4);
   margin-bottom: var(--space-2);
   color: var(--color-grey-900);
 }
 
+/* Body text — readable */
 .policy-section p {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
   margin-bottom: var(--space-3);
   color: var(--color-grey-700);
 }
@@ -244,7 +278,7 @@ import AppFooter from '@/components/AppFooter.vue'
 .policy-section li {
   color: var(--color-grey-700);
   margin-bottom: var(--space-2);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   line-height: var(--line-height-base);
 }
 
@@ -258,6 +292,10 @@ import AppFooter from '@/components/AppFooter.vue'
 @media (max-width: 768px) {
   .policy-page {
     padding-top: var(--space-8);
+  }
+
+  .policy-title {
+    font-size: var(--font-size-3xl);
   }
 
   .policy-section {

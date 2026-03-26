@@ -11,9 +11,12 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // Proxies /api/* to Spring Boot during dev — no CORS issues
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'https://smart-grocery-web.onrender.com',
+        changeOrigin: true
+      },
+      '/recipe-images': {
+        target: 'https://smart-grocery-web.onrender.com',
         changeOrigin: true
       }
     }
