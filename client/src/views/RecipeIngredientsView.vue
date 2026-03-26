@@ -303,13 +303,13 @@ onMounted(async () => {
 }
 
 .recipe-description {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: var(--color-grey-700);
 }
 
 .allergens {
   margin-top: var(--space-5);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: var(--color-grey-700);
 }
 
